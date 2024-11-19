@@ -6,6 +6,7 @@
     <title>Smart Coffee</title>
     <link rel="icon" href="./img/coffee.jpg" type="image/x-icon">
     <link rel="stylesheet" href="./style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <h1>Smart Coffee - Adafruit</h1>
@@ -32,20 +33,24 @@
         <p><a href="#" id="to-register">No tienes cuenta? Regístrate</a></p>
     </div>
 
-    <!-- Contenedor de Datos -->
-    <div id="data-container">
-        <h2>Datos del Feed</h2>
-        <table>
-            <thead>
+    <div id="info-container">
+        <div id="temperature-container">
+            <h2>Temperatura Actual</h2>
+            <hr>
+            <i id="temp-icon" class="fa-solid fa-temperature-three-quarters"></i>
+            <p id="temp-value">Cargando datos...</p>
+        </div>
+    
+        <!-- Contenedor de Datos -->
+        <div id="data-container">
+            <h2>Datos del Feed</h2>
+            <!-- <hr> -->
+            <table id="adafruit-data">
                 <tr>
-                    <th>Fecha</th>
-                    <th>Valor</th>
+                    <td>Cargando datos...</td>
                 </tr>
-            </thead>
-            <tbody id="data-table">
-                <!-- Aquí se cargarán los datos -->
-            </tbody>
-        </table>
+            </table>
+        </div>
     </div>
 
     <script src="app.js"></script>

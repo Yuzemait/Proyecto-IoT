@@ -16,9 +16,9 @@ const PUBLIC_DIR = path.join(__dirname, "public");
 app.use(express.static(PUBLIC_DIR));
 
 // Configura tu clave y feed de Adafruit IO
-const AIO_KEY = "TU_ADAFRUIT_IO_KEY";
-const USERNAME = "TU_USUARIO";
-const FEED = "TU_FEED";
+const AIO_KEY = "aio_fwWh42jIoIj3WTgVfGvMImIiCPhC";
+const USERNAME = "mar_vela15";
+const FEED = "mqtt-publish-esp32-mar.temperatura";
 
 const AIO_URL = `https://io.adafruit.com/api/v2/${USERNAME}/feeds/${FEED}/data`;
 
@@ -83,6 +83,7 @@ app.get("/data", async (req, res) => {
             },
         });
         res.json(response.data);
+        // console.log(response.data);
     } catch (error) {
         console.error("Error al obtener datos:", error.message);
         res.status(500).json({ error: "Error al conectar con Adafruit IO" });

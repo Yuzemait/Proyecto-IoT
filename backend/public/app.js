@@ -1,13 +1,17 @@
 // Configurar la URL base del backend
 const BASE_URL = "http://localhost:3000";
 
+
+const desired_temp = 20.0
+const max_temp = 30.0
+
 // Manejar el registro de usuario
 async function registerUser(event) {
     event.preventDefault();
 
     const username = document.getElementById("reg-username").value;
     const password = document.getElementById("reg-password").value;
-    const temperature = 50.0;
+    
 
     if (!username || !password) {
         alert("Por favor, complete todos los campos.");
@@ -64,6 +68,7 @@ async function loginUser(event) {
             alert(data.message);
             showData(); // Cambiar a la vista de datos
             fetchData(); // Obtener datos de Adafruit
+            setInterval(fetchData, 10000);
         } else {
             alert(data.error);
         }
@@ -78,16 +83,43 @@ async function fetchData() {
     try {
         const response = await fetch(`${BASE_URL}/data`);
         const data = await response.json();
+        const limit = 20
 
         const dataContainer = document.getElementById("adafruit-data");
         dataContainer.innerHTML = ""; // Limpiar datos anteriores
 
         if (response.ok) {
-            data.forEach((item) => {
-                const listItem = document.createElement("li");
-                listItem.textContent = `Valor: ${item.value}, Fecha: ${item.created_at}`;
+
+            const header = document.createElement("tr")
+            const headerFecha = document.createElement("td");
+            const headerValor = document.createElement("td");
+            headerFecha.textContent = "Fecha";
+            headerValor.textContent = "Valor";
+            header.appendChild(headerValor);
+            header.appendChild(headerFecha);
+
+            dataContainer.appendChild(header)
+
+            data.slice(0,limit).forEach((item) => {
+                const listItem = document.createElement("tr");
+                const listCol1 = document.createElement("td");
+                const listCol2 = document.createElement("td");
+                listCol1.textContent = `${item.value}`;
+                listCol2.textContent = `${item.created_at}`;
+                listItem.appendChild(listCol1);
+                listItem.appendChild(listCol2);
                 dataContainer.appendChild(listItem);
             });
+            
+            const realTemp = data[0].value;
+            // const realTemp = 31.0;
+            // Cambios en el icon
+            const value = document.getElementById("temp-value");
+            value.textContent = `${realTemp} °C`;
+            adjustTemp(realTemp);
+
+            console.log("Datos cargados");
+
         } else {
             alert("Error al obtener datos de Adafruit IO.");
         }
@@ -111,6 +143,34 @@ function showRegister() {
 function showData() {
     document.getElementById("login-container").classList.remove("active");
     document.getElementById("data-container").classList.add("active");
+    document.getElementById("temperature-container").classList.add("active");
+}
+
+function adjustTemp(temp){
+    if (temp < desired_temp) {
+        document.getElementById("temp-icon").classList.remove("fa-temperature-three-quarters");
+        document.getElementById("temp-icon").classList.remove("normal");
+        document.getElementById("temp-icon").classList.add("fa-thermometer-quarter");
+        document.getElementById("temp-icon").classList.add("cold");
+    }
+
+    if (temp > desired_temp && (temp < max_temp)) {
+        document.getElementById("temp-icon").classList.remove("fa-thermometer-quarter");
+        document.getElementById("temp-icon").classList.remove("fa-thermometer-full");
+        document.getElementById("temp-icon").classList.remove("cold");
+        document.getElementById("temp-icon").classList.remove("hot");
+        document.getElementById("temp-icon").classList.add("fa-temperature-three-quarters");
+        document.getElementById("temp-icon").classList.add("normal");
+    }
+
+    if (temp > max_temp) {
+        document.getElementById("temp-icon").classList.remove("fa-thermometer-quarter");
+        document.getElementById("temp-icon").classList.remove("fa-thermometer-three-quarters");
+        document.getElementById("temp-icon").classList.remove("cold");
+        document.getElementById("temp-icon").classList.remove("normal");
+        document.getElementById("temp-icon").classList.add("fa-temperature-full");
+        document.getElementById("temp-icon").classList.add("hot");
+    }
 }
 
 // Agregar event listeners
