@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login y Registro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        #login-container, #register-container, #data-container {
+            display: none;
+        }
+        #login-container.active, #register-container.active, #data-container.active {
+            display: block;
+        }
+        form {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Datos desde Adafruit IO</h1>
+
+    <!-- Contenedor de Registro -->
+    <div id="register-container" class="active">
+        <h2>Regístrate</h2>
+        <form id="register-form">
+            <input type="text" id="reg-username" placeholder="Usuario" required>
+            <input type="password" id="reg-password" placeholder="Contraseña" required>
+            <button type="submit">Registrar</button>
+        </form>
+        <p><a href="#" id="to-login">Ya tienes cuenta? Inicia sesión</a></p>
+    </div>
+
+    <!-- Contenedor de Login -->
+    <div id="login-container">
+        <h2>Inicia Sesión</h2>
+        <form id="login-form">
+            <input type="text" id="login-username" placeholder="Usuario" required>
+            <input type="password" id="login-password" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+        <p><a href="#" id="to-register">No tienes cuenta? Regístrate</a></p>
+    </div>
+
+    <!-- Contenedor de Datos -->
+    <div id="data-container">
+        <h2>Datos del Feed</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Valor</th>
+                </tr>
+            </thead>
+            <tbody id="data-table">
+                <!-- Aquí se cargarán los datos -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
