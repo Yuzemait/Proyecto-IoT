@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background-image: url('./img/coffee.jpg');
+    background-size: 130px 100px;
+    background-repeat: repeat;
+    background-position: top left;
+    image-rendering: optimizeQuality;
+}
+h1, h2 {
+    color: #333;
+}
+
+h1 {
+    font-size: 30px;
+    background-color: white;
+    border: 1px solid #333;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    padding: 10px;
+
+}
+#login-container, #register-container, #data-container {
+    display: none;
+}
+#login-container.active, #register-container.active, #data-container.active {
+    display: block;
+}
+#login-container, #register-container, #data-container {
+    max-width: 300px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+form {
+    display: inline-block;
+    justify-content: center;
+    text-align: center;
+
+}
+
+form input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form button {
+    width: 95%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+th, td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+th {
+    background-color: #f4f4f4;
+}
