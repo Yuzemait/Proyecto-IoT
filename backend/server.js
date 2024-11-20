@@ -16,7 +16,7 @@ const PUBLIC_DIR = path.join(__dirname, "public");
 app.use(express.static(PUBLIC_DIR));
 
 // Configura tu clave y feed de Adafruit IO
-const AIO_KEY = "aio_fwWh42jIoIj3WTgVfGvMImIiCPhC";
+const AIO_KEY = "aio_JDSK87ZaL2O7O7aaSnHeAXQBiIt6";
 const USERNAME = "mar_vela15";
 const FEED = "mqtt-publish-esp32-mar.temperatura";
 

@@ -12,11 +12,11 @@ h1, h2 {
 }
 
 h1 {
-    font-size: 30px;
+    font-size: 20px;
     background-color: white;
     border: 1px solid #333;
     border-radius: 10px;
-    width: 30%;
+    min-width: 150px;
     text-align: center;
     padding: 10px;
 
@@ -67,7 +67,7 @@ form button {
 }
 
 #info-container {
-    display: flex;
+    display: -flex;
     justify-content: center;
     /* background-color: red; */
     align-items: center;
@@ -77,11 +77,11 @@ form button {
 
 #data-container.active {
     color: white;
-    min-width: 500px;
-    height: 400px;
+    min-width: 90%;
+    /* height: 205px; */
     overflow-y: scroll;
-    max-height: 400px;
-    display: flex;
+    max-height: 300px;
+    display: inline-block;
     justify-content: center;
 }
 
@@ -89,7 +89,7 @@ table {
     /* border-collapse: collapse; */
     margin-top: 20px;
     background-color: #f9f9f9;
-    width: 350px;
+    width: 300px;
     min-width: 250px;
 }
 th, td {
@@ -103,20 +103,21 @@ th {
 }
 
 #temperature-container.active {
-    width: 30%;
-    height: 400px;
+    width: 90%;
+    height: 300px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 3px;
-    display: inline;
+    display: inline-block;
     justify-content: center;
     text-align: center;
     align-items: center;
-    padding: 20px;
+    padding: 10px;
+    margin: auto;
 }
 
 #temperature-container i {
-    font-size: 150px;
+    font-size: 80px;
     align-self: center;
     margin: 10px;
 }

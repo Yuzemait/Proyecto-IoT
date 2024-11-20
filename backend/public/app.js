@@ -1,5 +1,5 @@
 // Configurar la URL base del backend
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://proyecto-iot-1.onrender.com/";
 
 
 const desired_temp = 20.0
@@ -118,7 +118,7 @@ async function fetchData() {
             value.textContent = `${realTemp} °C`;
             adjustTemp(realTemp);
 
-            console.log("Datos cargados");
+            console.log("Datos car");
 
         } else {
             alert("Error al obtener datos de Adafruit IO.");
