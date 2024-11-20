@@ -1,5 +1,5 @@
 // Configurar la URL base del backend
-const BASE_URL = "https://proyecto-iot-1.onrender.com/";
+const BASE_URL = "https://proyecto-iot-1.onrender.com";
 
 
 const desired_temp = 20.0
