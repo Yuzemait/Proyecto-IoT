@@ -41,7 +41,7 @@ function saveUsers(users) {
 
 // Endpoint para registrar un usuario
 app.post("/register", (req, res) => {
-    const { username, password, temperature } = req.body;
+    const { username, password } = req.body;
 
     if (!username || !password) {
         return res.status(400).json({ error: "Usuario y contraseña son requeridos" });
