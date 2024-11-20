@@ -52,7 +52,7 @@ app.post("/register", (req, res) => {
         return res.status(409).json({ error: "El usuario ya existe" });
     }
 
-    users.push({ username, password, temperature });
+    users.push({ username, password });
     saveUsers(users);
 
     res.status(201).json({ message: "Usuario registrado con éxito" });
