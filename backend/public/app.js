@@ -24,7 +24,7 @@ async function registerUser(event) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username, password, temperature }),
+            body: JSON.stringify({ username, password})
         });
 
         const data = await response.json();
