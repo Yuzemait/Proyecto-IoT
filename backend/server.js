@@ -3,6 +3,11 @@ const fs = require("fs");
 const path = require("path");
 const axios = require("axios");
 const cors = require("cors");
+const mqtt = require('mqtt');
+// Configuración del broker MQTT
+const brokerUrl = 'mqtt://broker.hivemq.com'; // Puedes usar otro broker si lo necesitas
+const topic = 'smartcoffee/temperature'; // Topic para enviar la temperatura
+const client = mqtt.connect(brokerUrl);
 
 const app = express();
 const PORT = 3000;
@@ -25,6 +30,9 @@ const AIO_URL = `https://io.adafruit.com/api/v2/${USERNAME}/feeds/${FEED}/data`;
 // Ruta del archivo JSON para usuarios
 const USERS_FILE = path.join(__dirname, "data", "users.json");
 
+// Middleware para parsear JSON
+app.use(express.json());
+
 // Lee los usuarios desde el archivo JSON
 function getUsers() {
     if (!fs.existsSync(USERS_FILE)) {
@@ -38,6 +46,15 @@ function getUsers() {
 function saveUsers(users) {
     fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
 }
+
+// Conexión al broker MQTT
+client.on('connect', () => {
+    console.log('Conectado al broker MQTT');
+  });
+  
+  client.on('error', (err) => {
+    console.error('Error al conectar con el broker MQTT:', err);
+  });
 
 // Endpoint para registrar un usuario
 app.post("/register", (req, res) => {
@@ -90,32 +107,25 @@ app.get("/data", async (req, res) => {
     }
 });
 
-// Ruta para enviar temperatura al ESP32
-app.post("/send-to-esp32", async (req, res) => {
-    const esp32URL = "http://smartcoffee-esp32.local/send-float"; // Cambia por la IP o dominio de tu ESP32
-    const { value } = req.body; // Asegúrate de enviar el valor como parte del body
-
-    if (typeof value !== "number") {
-        return res.status(400).json({ error: "El valor debe ser un número" });
+// Ruta para recibir y enviar temperatura
+app.post('/send-to-esp32', (req, res) => {
+    const { temperature } = req.body;
+  
+    // Validar que se envió una temperatura
+    if (typeof temperature !== 'number') {
+      return res.status(400).json({ error: 'La temperatura debe ser un número.' });
     }
-
-    try {
-        const response = await axios.post(
-            esp32URL,
-            new URLSearchParams({ value: value.toString() }).toString(),
-            {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-            }
-        );
-
-        res.status(200).json({ message: "Valor enviado al ESP32", esp32Response: response.data });
-    } catch (error) {
-        console.error("Error al enviar datos al ESP32:", error.message);
-        res.status(500).json({ error: "Error al conectar con el ESP32" });
-    }
-});
+  
+    // Publicar la temperatura al topic
+    client.publish(topic, temperature.toString(), (err) => {
+      if (err) {
+        console.error('Error al publicar en MQTT:', err);
+        return res.status(500).json({ error: 'Error al enviar la temperatura.' });
+      }
+      console.log(`Temperatura enviada: ${temperature}`);
+      res.status(200).json({ message: `Temperatura ${temperature} enviada al ESP32.` });
+    });
+  });
 
 // Servir el frontend para cualquier ruta no manejada
 app.get("*", (req, res) => {

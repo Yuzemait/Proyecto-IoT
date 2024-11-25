@@ -146,7 +146,7 @@ async function sendTemp() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ value: temp }),
+            body: JSON.stringify({ temperature: temp }),
         });
 
         if (response.ok) {
