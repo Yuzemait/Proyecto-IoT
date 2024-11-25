@@ -1,5 +1,6 @@
 // Configurar la URL base del backend
 const BASE_URL = "https://proyecto-iot-1.onrender.com";
+// const BASE_URL = "http://localhost:3000";
 
 
 const desired_temp = 20.0
@@ -129,6 +130,40 @@ async function fetchData() {
     }
 }
 
+async function sendTemp() {
+    const backendURL = `${BASE_URL}/send-to-esp32`; // Cambia por la URL de tu backend
+    const temp = parseFloat(document.getElementById("temp-range-slider").value);
+    document.getElementById("temp-actual").textContent = temp + "°C"
+
+    if (isNaN(temp)) {
+        alert("Por favor ingresa un número válido.");
+        return;
+    }
+
+    try {
+        const response = await fetch(backendURL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ value: temp }),
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Respuesta del backend:", data);
+            alert("Valor enviado exitosamente al ESP32.");
+
+        } else {
+            console.error("Error al enviar al backend:", response.status);
+            alert("Error al enviar el valor.");
+        }
+    } catch (error) {
+        console.error("Error de conexión:", error);
+        alert("Error de conexión con el backend.");
+    }
+}
+
 // Cambiar entre vistas
 function showLogin() {
     document.getElementById("register-container").classList.remove("active");
@@ -178,3 +213,4 @@ document.getElementById("register-form").addEventListener("submit", registerUser
 document.getElementById("login-form").addEventListener("submit", loginUser);
 document.getElementById("to-login").addEventListener("click", showLogin);
 document.getElementById("to-register").addEventListener("click", showRegister);
+document.getElementById("set-temperature").addEventListener("click", sendTemp);

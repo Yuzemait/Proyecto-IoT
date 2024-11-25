@@ -77,7 +77,7 @@ form button {
 
 #data-container.active {
     color: white;
-    min-width: 90%;
+    width: 90%;
     /* height: 205px; */
     overflow-y: scroll;
     max-height: 300px;
@@ -104,7 +104,7 @@ th {
 
 #temperature-container.active {
     width: 90%;
-    height: 300px;
+    height: 450px;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     border-radius: 3px;
@@ -123,10 +123,17 @@ th {
 }
 
 #temperature-container p {
-    margin-top: 10px;
+    margin-top: 5px;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
+}
+
+#temp-value {
+    font-size: 30px;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px;
 }
 
 .cold {
@@ -139,4 +146,23 @@ th {
 
 .hot {
     color: red;
+}
+
+#temp-editor button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 3px;
+    border: 1px solid #333;
+
+}
+
+#temp-actual-text {
+    font-size: 10px;
+}
+
+#temp-actual-text span {
+    font-size: 20px;
 }

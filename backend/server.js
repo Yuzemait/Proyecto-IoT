@@ -90,6 +90,33 @@ app.get("/data", async (req, res) => {
     }
 });
 
+// Ruta para enviar temperatura al ESP32
+app.post("/send-to-esp32", async (req, res) => {
+    const esp32URL = "http://smartcoffee-esp32.local/send-float"; // Cambia por la IP o dominio de tu ESP32
+    const { value } = req.body; // Asegúrate de enviar el valor como parte del body
+
+    if (typeof value !== "number") {
+        return res.status(400).json({ error: "El valor debe ser un número" });
+    }
+
+    try {
+        const response = await axios.post(
+            esp32URL,
+            new URLSearchParams({ value: value.toString() }).toString(),
+            {
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            }
+        );
+
+        res.status(200).json({ message: "Valor enviado al ESP32", esp32Response: response.data });
+    } catch (error) {
+        console.error("Error al enviar datos al ESP32:", error.message);
+        res.status(500).json({ error: "Error al conectar con el ESP32" });
+    }
+});
+
 // Servir el frontend para cualquier ruta no manejada
 app.get("*", (req, res) => {
     res.sendFile(path.join(PUBLIC_DIR, "index.html"));

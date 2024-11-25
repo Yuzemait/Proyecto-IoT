@@ -37,7 +37,17 @@
         <h2>Temperatura Actual</h2>
         <hr>
         <i id="temp-icon" class="fa-solid fa-temperature-three-quarters"></i>
-        <p id="temp-value">Cargando datos...</p>
+        <p><span id="temp-value">Cargando datos...</span></p>
+        <hr>
+        <div id="temp-editor">
+            <h2>Cambio de temperatura</h2>
+            <div id="temp-range">
+                <input type="range" id="temp-range-slider" min="15" max="40" value="20">
+                <p><span id="temp-range-value">20°C</span></p>
+            </div>
+            <button id="set-temperature">Establecer Temperatura</button>
+            <p id="temp-actual-text">Actual: <span id="temp-actual">20°C</span></p>
+        </div>
     </div>
     <!-- Contenedor de Datos -->
     <div id="data-container">
@@ -54,5 +64,16 @@
     </div> -->
 
     <script src="app.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const slider = document.getElementById("temp-range-slider");
+            const valueDisplay = document.getElementById("temp-range-value");
+
+            // Actualiza el valor cuando el slider cambia
+            slider.addEventListener("input", () => {
+                valueDisplay.textContent = `${slider.value}°C`;
+            });
+        });
+    </script>
 </body>
 </html>
